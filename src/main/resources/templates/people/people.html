@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>People List</title>
+</head>
+<body>
+<div align="center">
+    <h1>List of Users</h1>
+    <hr>
+  <table border="5" cellspacing="0" cellpadding="15">
+    <thead align="center">
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+      <tbody align="center">
+      <tr th:each="user : ${people}">
+          <td th:text="${user.getId()}"/>
+          <td><a th:href="@{/admin/people/{id}(id=${user.getId()})}" th:text="${user.getFirstName()}"></a></td>
+          <td><a th:href="@{/admin/people/{id}(id=${user.getId()})}" th:text="${user.getLastName()}"></a></td>
+          <td th:text="${user.getEmail()}"/>
+          <td>
+              <button><a th:href="@{/admin/people/{id}/edit(id=${user.getId()})}">Edit</a></button>
+          </td>
+          <td>
+              <form th:method="DELETE" th:action="@{/admin/people/{id}(id=${user.getId()})}">
+                  <input type="submit" value="Delete"/>
+              </form>
+          </td>
+      </tr>
+      </tbody>
+
+  </table>
+    <a href="admin/people/new" style="font-size: 25px; display: inline-block; padding: 15px">Create new user</a>
+</div>
+<a th:href="@{/logout}">Logout</a>
+</body>
+</html>
