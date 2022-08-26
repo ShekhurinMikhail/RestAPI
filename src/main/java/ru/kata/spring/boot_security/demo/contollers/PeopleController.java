@@ -35,19 +35,19 @@ public class PeopleController {
         return "redirect:/admin/people";
     }
 
-    @GetMapping("/{id}")
-    public String showUser(@PathVariable("id") long id, Model model) {
+    @GetMapping(params = {"id"})
+    public String showUser(@RequestParam(value = "id", required = false) long id, Model model) {
         model.addAttribute("user", userService.showUser(id));
         return "people/showUser";
     }
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") long id){
+    @DeleteMapping(params = "id")
+    public String delete(@RequestParam(value = "id", required = false) long id){
         userService.deleteUser(id);
         return "redirect:/admin/people";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") long id) {
+    @GetMapping(value = "/edit", params = "id")
+    public String edit(Model model, @RequestParam(value = "id", required = false) long id) {
         model.addAttribute("user", userService.showUser(id));
         return "people/edit";
     }

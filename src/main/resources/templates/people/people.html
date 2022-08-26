@@ -22,14 +22,14 @@
       <tbody align="center">
       <tr th:each="user : ${people}">
           <td th:text="${user.getId()}"/>
-          <td><a th:href="@{/admin/people/{id}(id=${user.getId()})}" th:text="${user.getFirstName()}"></a></td>
-          <td><a th:href="@{/admin/people/{id}(id=${user.getId()})}" th:text="${user.getLastName()}"></a></td>
+          <td><a th:href="@{/admin/people(id=${user.getId()})}" th:text="${user.getFirstName()}"></a></td>
+          <td><a th:href="@{/admin/people(id=${user.getId()})}" th:text="${user.getLastName()}"></a></td>
           <td th:text="${user.getEmail()}"/>
           <td>
-              <button><a th:href="@{/admin/people/{id}/edit(id=${user.getId()})}">Edit</a></button>
+              <button><a th:href="@{/admin/people/edit(id=${user.getId()})}">Edit</a></button>
           </td>
           <td>
-              <form th:method="DELETE" th:action="@{/admin/people/{id}(id=${user.getId()})}">
+              <form th:method="DELETE" th:action="@{/admin/people(id=${user.getId()})}">
                   <input type="submit" value="Delete"/>
               </form>
           </td>
@@ -37,7 +37,7 @@
       </tbody>
 
   </table>
-    <a href="admin/people/new" style="font-size: 25px; display: inline-block; padding: 15px">Create new user</a>
+    <a href="/admin/people/new" style="font-size: 25px; display: inline-block; padding: 15px">Create new user</a>
 </div>
 <a th:href="@{/logout}">Logout</a>
 </body>

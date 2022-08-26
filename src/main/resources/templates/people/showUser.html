@@ -27,8 +27,8 @@
     </table>
     <hr>
     <button><a href="/admin/people">Back</a></button>
-    <button><a th:href="@{/admin/people/{id}/edit(id=${user.getId()})}">Edit</a></button>
-    <form th:method="DELETE" th:action="@{/admin/people/{id}(id=${user.getId()})}" style="margin-top: 10px">
+    <button><a th:href="@{/admin/people/edit(id=${user.getId()})}">Edit</a></button>
+    <form th:method="DELETE" th:action="@{/admin/people(id=${user.getId()})}" style="margin-top: 10px">
         <input type="submit" value="Delete"/>
     </form>
 </div>
