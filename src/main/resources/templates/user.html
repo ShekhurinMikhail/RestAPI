@@ -6,11 +6,38 @@
 </head>
 <body>
     <h1>User, welcome spring boot security page!</h1>
-    <p>Your email: </p>
-        <div sec:authentication="name">
-        </div>
-    <div sec:authentication="principal.authorities"></div>
-    <div sec:authorize="isAuthenticated()">
+    <p>Sec tags:</p>
+        <p>Your email: </p>
+            <div sec:authentication="name"></div>
+        <p>Your roles: </p>
+            <div sec:authentication="principal.authorities"></div>
+    <hr>
+    <div>
+        <p>Model:</p>
+        <table border="5" cellspacing="0" cellpadding="15">
+            <p>User Information-Page</p>
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>Fist Name</td>
+                <td>Last Name</td>
+                <td>Email</td>
+                <td>Role</td>
+            </tr>
+            </thead>
+            <tbody align="center">
+            <tr  th:object="${user}">
+                <td th:text="*{getId()}"/>
+                <td th:text="*{getFirstName()}"/>
+                <td th:text="*{getLastName()}"/>
+                <td th:text="*{getEmail()}"/>
+                <td th:text="*{getRoles()}"/>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div sec:authorize="isAuthenticated()" style="margin-top: 10px">
         <form  th:action="@{/logout}" method="post">
             <input type="submit" value="Logout">
         </form>
