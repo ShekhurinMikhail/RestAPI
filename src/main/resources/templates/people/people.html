@@ -39,6 +39,10 @@
   </table>
     <a href="/admin/people/new" style="font-size: 25px; display: inline-block; padding: 15px">Create new user</a>
 </div>
-<a th:href="@{/logout}">Logout</a>
+<div sec:authorize="isAuthenticated()">
+    <form  th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout">
+    </form>
+</div>
 </body>
 </html>
