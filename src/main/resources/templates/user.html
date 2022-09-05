@@ -3,44 +3,115 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Spring Security Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 </head>
 <body>
-    <h1>User, welcome spring boot security page!</h1>
-    <p>Sec tags:</p>
-        <p>Your email: </p>
-            <div sec:authentication="name"></div>
-        <p>Your roles: </p>
-            <div sec:authentication="principal.authorities"></div>
-    <hr>
-    <div>
-        <p>Model:</p>
-        <table border="5" cellspacing="0" cellpadding="15">
-            <p>User Information-Page</p>
-            <thead>
-            <tr>
-                <td>ID</td>
-                <td>Fist Name</td>
-                <td>Last Name</td>
-                <td>Email</td>
-                <td>Role</td>
-            </tr>
-            </thead>
-            <tbody align="center">
-            <tr  th:object="${user}">
-                <td th:text="*{getId()}"/>
-                <td th:text="*{getFirstName()}"/>
-                <td th:text="*{getLastName()}"/>
-                <td th:text="*{getEmail()}"/>
-                <td th:text="*{getRoles()}"/>
-            </tr>
-            </tbody>
+<div class="container-fluid bg-dark text-white">
+    <div class="row p-2">
+        <div class="col-auto me-auto">
+            <strong><span sec:authentication="name"></span></strong>
+            <span>with roles:</span>
+            <!--            <span sec:authentication="principal.authorities"></span>-->
+            <span th:each="role : ${user.authorities}">
+                <span th:text="${role}"></span>
+            </span>
+        </div>
+        <div class="col-auto">
+            <a class="nav-link text-muted" th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+</div>
+<!--Тело-->
+<div class="container-fluid">
+    <div class="row">
+        <!--Левая часть -->
+        <div class="col-2 p-0">
+            <ul class="nav nav-pills flex-column mt-3" aria-orientation="vertical">
+                <li class="nav-item">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}" class="nav-link">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/user}" class="nav-link active">User</a>
+                </li>
+            </ul>
+        </div>
+        <!--Правая часть -->
+        <div class="col-10 bg-light min-vh-100">
+            <div class="h1 pt-3 px-4">
+                User information-page
+            </div>
+            <div class="pt-2 px-4">
+                <div class="card">
+                    <div class="card-header">
+                        <p class="h4 m-0">About user</p>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:object="${user}">
+                                <td th:text="${user.getId()}"></td>
+                                <td th:text="${user.getFirstName()}"></td>
+                                <td th:text="${user.getLastName()}"></td>
+                                <td th:text="${user.getEmail()}"></td>
+                                <td><span th:each="role : ${user.authorities}"><span th:text="${role}"></span> </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>Sec tags:</p>
+<p>Your email: </p>
+<div sec:authentication="name"></div>
+<p>Your roles: </p>
+<div sec:authentication="principal.authorities"></div>
+<hr>
+<div>
+    <p>Model:</p>
+    <table border="5" cellspacing="0" cellpadding="15">
+        <p>User Information-Page</p>
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Fist Name</td>
+            <td>Last Name</td>
+            <td>Email</td>
+            <td>Role</td>
+        </tr>
+        </thead>
+        <tbody align="center">
+        <tr th:object="${user}">
+            <td th:text="*{getId()}"/>
+            <td th:text="*{getFirstName()}"/>
+            <td th:text="*{getLastName()}"/>
+            <td th:text="*{getEmail()}"/>
+            <td th:text="*{getRoles()}"/>
+        </tr>
+        </tbody>
 
-        </table>
-    </div>
-    <div sec:authorize="isAuthenticated()" style="margin-top: 10px">
-        <form  th:action="@{/logout}" method="post">
-            <input type="submit" value="Logout">
-        </form>
-    </div>
+    </table>
+</div>
+<div sec:authorize="isAuthenticated()" style="margin-top: 10px">
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout">
+    </form>
+</div>
+
 </body>
 </html>
