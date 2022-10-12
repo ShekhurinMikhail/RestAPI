@@ -61,9 +61,9 @@ public class PeopleRestController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUserById(@PathVariable(value = "id") Long id) {
-        if (userService.showUser(id) == null) {
-            throw new NoSuchPeopleException("There is no person with ID = " + id + " in DataBase");
-        }
+//        if (userService.showUser(id) == null) {
+//            throw new NoSuchPeopleException("There is no person with ID = " + id + " in DataBase");
+//        }
         userService.deleteUser(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }

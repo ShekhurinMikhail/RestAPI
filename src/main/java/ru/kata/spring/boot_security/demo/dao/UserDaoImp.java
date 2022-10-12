@@ -16,7 +16,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return entityManager.createQuery("FROM User").getResultList();
+        return entityManager.createQuery("select u from User u").getResultList();
     }
 
     @Override
@@ -31,7 +31,10 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void deleteUser(long id) {
-        entityManager.remove(showUser(id));
+        User user = showUser(id);
+        if (user != null) {
+            entityManager.remove(user);
+        }
     }
 
     @Override
@@ -41,13 +44,9 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public User findUserByEmail(String email) {
-         try{
              return entityManager.createQuery("select u from User u where u.email=:email", User.class)
                      .setParameter("email", email)
                      .getSingleResult();
-         } catch (Exception e) {
-             return null;
-         }
     }
 
 }
